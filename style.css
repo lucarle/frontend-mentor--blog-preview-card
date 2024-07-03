@@ -1,0 +1,134 @@
+@font-face {
+  font-family: "Figtree";
+  src: url("assets/fonts/Figtree-VariableFont_wght.ttf") format("truetype");
+}
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {margin: 0;}
+
+  img:not(p > *) {
+    display: block;
+    max-inline-size: 100%;
+  }
+
+  a {
+    color: currentColor;
+    text-decoration: inherit;
+  }
+}
+
+body {
+  font-family: "Figtree", sans-serif;
+  line-height: 1.5;
+  background-color: hsl(47, 88%, 63%);
+}
+
+.frame {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &::before {content: "";}
+
+  &::before,
+  footer {
+    flex-grow: 1;
+    flex-basis: 0;
+  }
+}
+
+.articlePreviewCard {
+  max-width: calc(327 / 16 * 1rem);
+  padding: 24px;
+  border-radius: 20px;
+  outline: 1px solid hsl(0, 0%, 7%);
+  background-color: white;
+  box-shadow: 8px 8px black;
+
+  @media (min-width: 960px) {max-width: calc(384 / 16 * 1rem);}
+
+  > * {margin-block: 24px;}
+  > :first-child {margin-block-start: 0;}
+  > :last-child {margin-block-end: 0;}
+}
+
+@scope (.articlePreviewCard) {
+  .illustration {
+    block-size: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .mainContent {
+    > * {margin-block: 12px;}
+    > :first-child {margin-block-start: 0;}
+    > :last-child {margin-block-end: 0;}
+  }
+
+  .category {
+    font-size: 0.75rem;
+    @media (min-width: 960px) { font-size: 0.875rem;}
+
+    b {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 4px;
+      background-color: hsl(47, 88%, 63%);
+    }
+  }
+
+  .pubDate {
+    font-size: 0.75rem;
+    @media (min-width: 960px) {font-size: 0.875rem;}
+  }
+
+  .headline {
+    font-size: 1.25rem;
+    @media (min-width: 960px) {font-size: 1.5rem;}
+  }
+
+  .description {
+    font-size: 0.875rem;
+    color: hsl(0, 0%, 50%);
+    @media (min-width: 960px) {font-size: 1rem;}
+  }
+
+  .author {
+    font-size: 0.875rem;
+
+    img {
+      vertical-align: middle;
+      margin-inline-end: 12px;
+    }
+  }
+
+  /* active states */
+  :scope {
+    position: relative;
+
+    a::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
+
+    &:has(a:is(:hover, :focus)) {
+      box-shadow: 16px 16px black;
+      transform: scale(1.05, 1.05);
+
+      .headline {
+        color: hsl(47, 88%, 63%);
+      }
+    }
+
+    &, .headline {transition: all 0.3s ease-in-out;}
+  }
+}
