@@ -1,26 +1,22 @@
-@font-face {
-  font-family: "Figtree";
-  src: url("assets/fonts/Figtree-VariableFont_wght.ttf") format("truetype");
-}
-
 @layer reset {
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
+  *, ::before, ::after {box-sizing: border-box;} /* ¯\_(ツ)_/¯ */
 
-  body {margin: 0;}
+  body {margin: 0px;}
 
-  img:not(p > *) {
+  img:not(p *) {
     display: block;
     max-inline-size: 100%;
   }
 
   a {
-    color: currentColor;
-    text-decoration: inherit;
+    color: unset;
+    text-decoration: unset;
   }
+}
+
+@font-face {
+  font-family: "Figtree";
+  src: url("assets/fonts/Figtree-VariableFont_wght.ttf") format("truetype");
 }
 
 body {
@@ -31,51 +27,51 @@ body {
 
 .frame {
   min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 100dvh; /* may reduce performance?! */
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: -0.5px;
 
   &::before {content: "";}
-
-  &::before,
+  
+  /* Center the solution without having to take out (or beeing offset by) the attribution!
+  (The shorhand "flex: 1" sets flex-basis to 0%, which doesn't work with the dynamic 
+  "min-height: 100vh") */
+  &::before, 
   footer {
-    flex-grow: 1;
+    flex-grow: 1; 
     flex-basis: 0;
   }
 }
 
 .articlePreviewCard {
-  max-width: calc(327 / 16 * 1rem);
-  padding: 24px;
+  max-width: calc(327 / 16 * 1em); /* more readable than 20,4375em!? */
+  padding: 23px;
   border-radius: 20px;
-  outline: 1px solid hsl(0, 0%, 7%);
+  border: 1px solid hsl(0, 0%, 7%);
   background-color: white;
   box-shadow: 8px 8px black;
-
-  @media (min-width: 960px) {max-width: calc(384 / 16 * 1rem);}
-
-  > * {margin-block: 24px;}
-  > :first-child {margin-block-start: 0;}
-  > :last-child {margin-block-end: 0;}
+  
+  @media (min-width: 60em) {max-width: 24em;}
 }
 
 @scope (.articlePreviewCard) {
+  > * {margin-block: 24px;}
+  > :first-child {margin-block-start: 0;}
+  > :last-child {margin-block-end: 0;}
+
   .illustration {
     block-size: 200px;
     object-fit: cover;
     border-radius: 10px;
   }
 
-  .mainContent {
-    > * {margin-block: 12px;}
-    > :first-child {margin-block-start: 0;}
-    > :last-child {margin-block-end: 0;}
-  }
+  .mainContent > * {margin-block: 12px;}
 
   .category {
     font-size: 0.75rem;
-    @media (min-width: 960px) { font-size: 0.875rem;}
+    @media (min-width: 60em) { font-size: 0.875rem;}
 
     b {
       display: inline-block;
@@ -85,20 +81,20 @@ body {
     }
   }
 
-  .pubDate {
+  .datePublished {
     font-size: 0.75rem;
-    @media (min-width: 960px) {font-size: 0.875rem;}
+    @media (min-width: 60em) {font-size: 0.875rem;}
   }
 
   .headline {
     font-size: 1.25rem;
-    @media (min-width: 960px) {font-size: 1.5rem;}
+    @media (min-width: 60em) {font-size: 1.5rem;}
   }
 
   .description {
     font-size: 0.875rem;
     color: hsl(0, 0%, 50%);
-    @media (min-width: 960px) {font-size: 1rem;}
+    @media (min-width: 60em) {font-size: 1rem;}
   }
 
   .author {
@@ -109,26 +105,31 @@ body {
       margin-inline-end: 12px;
     }
   }
+  
+  /* active-states */
+  :scope {position: relative;}
 
-  /* active states */
-  :scope {
-    position: relative;
-
-    a::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-    }
-
-    &:has(a:is(:hover, :focus)) {
-      box-shadow: 16px 16px black;
-      transform: scale(1.05, 1.05);
-
-      .headline {
-        color: hsl(47, 88%, 63%);
-      }
-    }
-
-    &, .headline {transition: all 0.3s ease-in-out;}
+  .headline a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
   }
+
+  :scope:has(.headline a:is(:hover, :focus)) {
+    box-shadow: 16px 16px black;
+    transform: scale(1.05, 1.05);
+
+    .headline {color: hsl(47, 88%, 63%);}
+  }
+
+  :scope, .headline {transition: all 0.3s ease-in-out;}
+}
+
+.attribution {
+  font-size: 11px;
+  text-align: center;
+}
+
+.attribution a {
+  color: hsl(228, 45%, 44%);
 }
